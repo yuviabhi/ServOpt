@@ -75,3 +75,11 @@ footer {
 }
 
 .button-circular {border-radius: 50%;}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}

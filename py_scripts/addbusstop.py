@@ -5,7 +5,7 @@ stopname = sys.argv[3]
 
 #lat = 22.11
 #lon = 88.54
-#stopname = 'abc'
+#stopname = 'try'
 
 print lat 
 print lon

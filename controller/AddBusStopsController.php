@@ -6,7 +6,7 @@
 	
 
   	//exec("python py_scripts/first.py", $output);
-  	$cmd = "C:\\Python27\\python.exe C:\\wamp\\www\\ServOpt\\py_scripts\\addbusstop.py" .' '. $lat . ' '. $lon . ' ' .$stopname;
+  	$cmd = "C:\\Python27\\python.exe C:\\xampp\\htdocs\\ServOpt\\py_scripts\\addbusstop.py" .' '. $lat . ' '. $lon . ' ' .$stopname;
   	//echo $cmd;
   	exec($cmd, $output, $return);  
   	//echo $output[0];

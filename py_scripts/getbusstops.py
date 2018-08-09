@@ -3,7 +3,8 @@ import json
 from MyDatabase import *
 db = MyDatabase()
 db.connect()
-sql = "SELECT stop_id, lat, lon, stop_name FROM bus_stops"
+#sql = "SELECT stop_id, lat, lon, stop_name FROM bus_stops_new"
+sql = "SELECT stop_id, lat, lon, stop_name FROM bus_stops_new order by route_no, direction, sequence;"
 
 rows , desc = db.fetchall(sql)
 

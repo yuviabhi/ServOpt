@@ -5,7 +5,7 @@ class MyDatabase(object):
 	def __init__(self):
 		self.host="localhost"
 		self.user="root"
-		self.passwd=""
+		self.passwd="password"
 		self.database="servopt_db"
 		self.mydb = 0
 		self.mycursor = 0

@@ -6,7 +6,12 @@ $(document).ready( function () {
   // call functions
   var gmap = initMap();
 
-  showBusStops(gmap);
+  //showBusStops(gmap);
+      $("#showBusStops").click(function() {
+          
+          showBusStops(gmap);
+      
+    });
 });
 
 
@@ -23,17 +28,17 @@ function initMap() {
     }
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    var terminal1 = new google.maps.Marker({
-              position:  {lat: 22.453853, lng: 88.394704},
-              map: map,
-              title: 'Terminal : Kamalgazi'
-            });
+    // var terminal1 = new google.maps.Marker({
+    //           position:  {lat: 22.453853, lng: 88.394704},
+    //           map: map,
+    //           title: 'Terminal : Kamalgazi'
+    //         });
 
-    var terminal2 = new google.maps.Marker({
-              position:  {lat: 22.590639, lng: 88.393139},
-              map: map,
-              title: 'Terminal : Ultadanga/Hudco II'
-            });
+    // var terminal2 = new google.maps.Marker({
+    //           position:  {lat: 22.590639, lng: 88.393139},
+    //           map: map,
+    //           title: 'Terminal : Ultadanga/Hudco II'
+    //         });
 
 
     // Update lat/long value of div when anywhere in the map is clicked
@@ -59,6 +64,8 @@ function initMap() {
     return map;
   
 }
+
+
 
 
 //Load all bus stops on map at page load
@@ -93,6 +100,19 @@ function showBusStops(map){
                    // google.maps.event.addListener(marker[i], 'click', function() {
                    //    infowindow[i].open(map,this);
                    // });
+
+                  //i=i+1;
+                  var table = document.getElementById("table_busstops");
+                  var row = table.insertRow(i+1);
+                  var cell0 = row.insertCell(0);
+                  var cell1 = row.insertCell(1);
+                  var cell2=row.insertCell(2);
+                  var cell3=row.insertCell(3);
+                
+                  cell0.innerHTML =i+1;
+                  cell1.innerHTML = arr[i+1].lat;
+                  cell2.innerHTML=arr[i+1].lon;
+                  cell3.innerHTML=arr[i+1].stop_name;
                   
                   
           }
@@ -108,7 +128,7 @@ function showBusStops(map){
       }
      });
 
-
+      document.getElementById("div_busstops").style.visibility = "visible";
 }
 
 
@@ -118,7 +138,7 @@ $("#addBusStops").click(function() {
   //alert('a');
   var lat = document.getElementById('latclicked').innerHTML;
   var lon = document.getElementById('longclicked').innerHTML;
-  var stopname = document.getElementById('busstop').value;
+  var stopname = document.getElementById('busstopname').value;
   //alert(lat + ' '+ lon + ' ' + stopname);
   $.ajax({
       url: 'controller/AddBusStopsController.php',
