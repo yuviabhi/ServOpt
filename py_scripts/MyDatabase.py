@@ -5,7 +5,8 @@ class MyDatabase(object):
 	def __init__(self):
 		self.host="localhost"
 		self.user="root"
-		self.passwd="password"
+		#self.passwd="password"
+		self.passwd=""
 		self.database="servopt_db"
 		self.mydb = 0
 		self.mycursor = 0
@@ -51,6 +52,11 @@ class MyDatabase(object):
 	def fetchmany(self, sql, num_rows):
 		self.mycursor.execute(sql)
 		return self.mycursor.fetchmany(num_rows)
+
+	def fetchraw(self, sql, val):
+		self.mycursor.execute(sql, val)
+		#Returning all-rows , columns-name
+		return self.mycursor.fetchall() , self.mycursor.description 
 			
 
 	

@@ -30,7 +30,7 @@ CREATE TABLE `bus_route` (
   `distance` decimal(5,2) DEFAULT NULL,
   `route_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`route_no`,`direction`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `bus_stops_new` (
   PRIMARY KEY (`stop_id`),
   KEY `route_no_idx` (`route_no`,`direction`),
   CONSTRAINT `route_no` FOREIGN KEY (`route_no`, `direction`) REFERENCES `bus_route` (`route_no`, `direction`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +120,7 @@ CREATE TABLE `bus_tracking_log` (
   KEY `bus_stops_live_tracking_idx` (`stop_id`),
   CONSTRAINT `bus_stops_live_tracking` FOREIGN KEY (`stop_id`) REFERENCES `bus_stops_new` (`stop_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `route_no_live_tracking` FOREIGN KEY (`route_no`, `direction`) REFERENCES `bus_route` (`route_no`, `direction`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

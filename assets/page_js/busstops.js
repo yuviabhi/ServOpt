@@ -6,10 +6,16 @@ $(document).ready( function () {
   // call functions
   var gmap = initMap();
 
+  getBusRoutes();
+
   //showBusStops(gmap);
       $("#showBusStops").click(function() {
-          
-          showBusStops(gmap);
+          var ele = document.getElementById("bus_route");
+          var drp_slc_value = ele.options[ele.selectedIndex].value; // return the value
+          //var strUser = e.options[e.selectedIndex].text;  //return the text
+          var route_no = drp_slc_value.substr(0, drp_slc_value.indexOf('-')); 
+          var direction = drp_slc_value.substr(drp_slc_value.indexOf('-')+1); 
+          showBusStops(gmap, route_no, direction);
       
     });
 });
@@ -65,16 +71,58 @@ function initMap() {
   
 }
 
+// Fill dropdown of bus routes
+ function getBusRoutes(){
+      //alert('getBusRoute');
+      $.ajax({
+                  type: "POST",
+                  url: "controller/GetBusRoutesController.php",
+                  success: function(data)
+                  {
+                      //alert(data);
+                      helpers.buildDropdown(
+                          jQuery.parseJSON(data),
+                          $('#bus_route'),
+                          '--- Select an option ---'
+                      );
+                  }
+              });
+
+      var helpers =
+        {
+            buildDropdown: function(result, dropdown, emptyMessage)
+            {
+                // Remove current options
+                dropdown.html('');
+                // Add the empty option with the empty message
+                dropdown.append('<option value="">' + emptyMessage + '</option>');
+                // Check result isnt empty
+                if(result != '')
+                {
+                    // Loop through each of the results and append the option to the dropdown
+                    $.each(result, function(k, v) {
+                        //alert(k + ":"+v);
+                        
+                        $.each(jQuery.parseJSON(v), function(m, n){
+                            //alert(m + ":"+n.route_no);
+                            dropdown.append('<option value="' + n.route_no + '-'+n.direction + '">' + n.route_no + ' '+n.direction + '</option>');
+                        });
+                        
+                    });
+                }
+            }
+        }
+ }
 
 
-
-//Load all bus stops on map at page load
-function showBusStops(map){
+//Load all bus stops on map and table at page load
+function showBusStops(map, route_no, direction){
     //alert(map);
     $.ajax({
       url: 'controller/GetBusStopsController.php',
       type: 'POST',
       dataType: 'json',
+      data: ({route_no: route_no, direction:direction}),
       success: function(data){
            //alert(data);
            var arr = JSON.parse(data);
@@ -109,10 +157,10 @@ function showBusStops(map){
                   var cell2=row.insertCell(2);
                   var cell3=row.insertCell(3);
                 
-                  cell0.innerHTML =i+1;
-                  cell1.innerHTML = arr[i+1].lat;
-                  cell2.innerHTML=arr[i+1].lon;
-                  cell3.innerHTML=arr[i+1].stop_name;
+                  cell0.innerHTML =arr[i].stop_id;
+                  cell1.innerHTML = arr[i].lat;
+                  cell2.innerHTML=arr[i].lon;
+                  cell3.innerHTML=arr[i].stop_name;
                   
                   
           }
@@ -128,28 +176,44 @@ function showBusStops(map){
       }
      });
 
+      // make all hidden divs -> visible
+      document.getElementById("div_busstops").style.display = "block";
       document.getElementById("div_busstops").style.visibility = "visible";
+      document.getElementById("div_addbusstops").style.display = "block";
 }
 
 
 
-// Insert bus stop information into database
+// Insert bus stops information into database
 $("#addBusStops").click(function() {
   //alert('a');
+  var ele = document.getElementById("bus_route");
+  var drp_slc_value = ele.options[ele.selectedIndex].value; // return the value
+  var route_no = drp_slc_value.substr(0, drp_slc_value.indexOf('-')); 
+  var direction = drp_slc_value.substr(drp_slc_value.indexOf('-')+1);
   var lat = document.getElementById('latclicked').innerHTML;
   var lon = document.getElementById('longclicked').innerHTML;
   var stopname = document.getElementById('busstopname').value;
+  var radius = 120;
+
+  
+
   //alert(lat + ' '+ lon + ' ' + stopname);
   $.ajax({
       url: 'controller/AddBusStopsController.php',
       data: ({lat:lat,
               lon:lon,
-              stopname:stopname}),
+              stopname:stopname, 
+              route_no: route_no, 
+              direction:direction, 
+              radius:radius,              
+            }),
       type: 'POST',
       dataType: 'text',
-      success: function(data1){
-           alert(data1);
+      success: function(status){
+           alert(status);
       }
+      
      });
 });
 

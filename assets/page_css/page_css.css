@@ -83,3 +83,18 @@ footer {
 .hidden {
     visibility: hidden;
 }
+
+.ddl1 {
+    min-height:190px; 
+    overflow-y :auto; 
+    overflow-x:hidden; 
+    position:absolute;
+    width:300px;
+    /*display: contents;*/
+ }
+
+.ddl {
+    /*height: 60px;*/
+    /*max-height: 60px;*/
+    overflow-y: scroll;
+}

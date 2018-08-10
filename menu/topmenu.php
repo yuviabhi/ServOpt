@@ -10,9 +10,11 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Projects</a></li>
+        <li><a href="#">Home</a></li>
+        <li class="active"><a href="#">Kolkata</a></li>
+        <li><a href="#">Rajkot</a></li>
+        <li><a href="#">Vishakapatnam</a></li>
+        <li><a href="#">About Us</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
